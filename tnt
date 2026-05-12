@@ -1,0 +1,121 @@
+import { useEffect, useState } from 'react';
+
+export default function CrazyAdsSite() {
+  const [seconds, setSeconds] = useState(15);
+  const [showSkip, setShowSkip] = useState(false);
+  const [entered, setEntered] = useState(false);
+  const [won, setWon] = useState(false);
+  const [show404, setShow404] = useState(false);
+
+  useEffect(() => {
+    if (seconds > 0) {
+      const timer = setTimeout(() => {
+        setSeconds((prev) => prev - 1);
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    } else {
+      setShowSkip(true);
+    }
+  }, [seconds]);
+  const ads = [
+    '🔥 اینترنت ۱۰۰۰ گیگ رایگان! فقط کلیک کن 😂',
+    '🍕 پیتزای نامرئی با ۹۹٪ تخفیف!',
+    '💰 تو برنده ۱ میلیارد موز شدی 🍌',
+    '🚀 دانلود سرعت نور برای گوشی نوکیا',
+    '👀 این تبلیغ را نبینی ضرر کردی!',
+    '🎮 سیب‌زمینی گیمینگ RGB رسید!',
+    '📢 الان کلیک کن شاید هیچی نشه 😂',
+  ];
+
+  if (show404) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-white text-center p-10">
+        <h1 className="text-8xl font-black text-gray-700 mb-6">404</h1>
+        <p className="text-3xl text-gray-500 mb-4">Google Error 😂</p>
+        <p className="text-lg text-gray-400 mb-4">صفحه پیدا نشد چون زیادی تبلیغ دیدی 😎</p>
+        <p className="text-2xl font-bold text-red-500">متاسفم 😂</p>
+      </div>
+    );
+  }
+
+  if (won) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-green-200 text-center p-10">
+        <h1 className="text-6xl font-black mb-6 animate-bounce">🏆 برنده شدی 😂💰</h1>
+        <p className="text-3xl mb-8">تو برنده ۱۰۰۰ موز طلایی شدی 🍌✨</p>
+
+        <button
+          onClick={() => setShow404(true)}
+          className="bg-red-500 hover:bg-red-700 text-white px-8 py-4 rounded-3xl text-2xl"
+        >
+          تبلیغ میخوای؟ 😂
+        </button>
+      </div>
+    );
+  }
+
+  if (entered) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-blue-100 text-center p-10">
+        <h1 className="text-5xl font-black mb-10">💰 روی پول کلیک کن 💰</h1>
+
+        <button
+          onClick={() => setWon(true)}
+          className="text-9xl animate-bounce"
+        >
+          💵
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-yellow-100 p-6 text-center overflow-hidden relative">
+      <h1 className="text-5xl font-black mb-6 animate-bounce">
+        😂 سایت پر از تبلیغ 😂
+      </h1>
+
+      <div className="grid md:grid-cols-3 gap-4">
+        {ads.map((ad, i) => (
+          <div
+            key={i}
+            className="bg-white border-4 border-red-400 rounded-3xl p-6 shadow-2xl animate-pulse"
+          >
+            <h2 className="text-2xl font-bold mb-3">تبلیغ ویژه 🚨</h2>
+            <p className="text-lg mb-4">{ad}</p>
+            <button
+              onClick={() => alert('😂 گیر افتادی! اینم یه تبلیغ دیگه!')}
+              className="bg-red-500 hover:bg-red-700 text-white px-5 py-3 rounded-2xl text-xl"
+            >
+              کلیک کن 😎
+            </button>
+          </div>
+        ))}
+      </div>
+
+      <div className="fixed bottom-24 left-1/2 -translate-x-1/2 bg-black text-white p-5 rounded-3xl shadow-2xl">
+        {!showSkip ? (
+          <div>
+            ⏳ برای رد کردن تبلیغ باید {seconds} ثانیه صبر کنی 😂
+          </div>
+        ) : (
+          <button
+            onClick={() => setEntered(true)}
+            className="bg-green-500 hover:bg-green-700 px-6 py-3 rounded-2xl text-2xl"
+          >
+            رد کردن تبلیغ 😎
+          </button>
+        )}
+      </div>
+
+      <div className="fixed bottom-4 right-4 bg-pink-500 text-white p-4 rounded-2xl animate-bounce shadow-2xl">
+        🚨 این تبلیغ مزاحم است 😂
+      </div>
+
+      <div className="fixed top-10 left-4 bg-green-500 text-white p-4 rounded-2xl animate-spin shadow-2xl">
+        🍌 تبلیغ موزی
+      </div>
+    </div>
+  );
+}
